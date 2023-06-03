@@ -28,9 +28,6 @@ public class UserProfile {
     @OneToOne(mappedBy = "userProfile")
     private User user;
 
-
-
-
     public Long getId() {
         return id;
     }

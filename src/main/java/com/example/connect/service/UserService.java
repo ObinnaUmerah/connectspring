@@ -25,12 +25,19 @@ public class UserService {
 
     private JWTUtils jwtUtils;
     private MyUserDetails myUserDetails;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,
+                       @Lazy PasswordEncoder passwordEncoder,
+                       JWTUtils jwtUtils,
+                       @Lazy AuthenticationManager authenticationManager,
+                       @Lazy MyUserDetails myUserDetails) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        this.myUserDetails = myUserDetails;
     }
 
     public User createUser(User userObject) {
@@ -50,6 +57,7 @@ public class UserService {
 
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
         try {
+            System.out.println(loginRequest.getPassword() + loginRequest.getEmail());
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);

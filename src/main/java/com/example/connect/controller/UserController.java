@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/auth")
+@RequestMapping(path = "/auth/users")
 public class UserController {
 
     private UserService userService;
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     // http://localhost:8080/auth/users/register/
-    @PostMapping(path = "/register")
+    @PostMapping(path = "/register/")
     public User createUser(@RequestBody User userObject) {
         return userService.createUser(userObject);
     }

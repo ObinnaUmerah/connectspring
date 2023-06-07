@@ -79,4 +79,6 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring().antMatchers("/h2-console/**");
     }
 
+
+
 }

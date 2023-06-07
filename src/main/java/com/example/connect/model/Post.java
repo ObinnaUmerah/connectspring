@@ -23,6 +23,12 @@ public class Post {
         this.content = content;
     }
 
+    public Post(Long id, String content, User user) {
+        this.id = id;
+        this.content = content;
+        this.user = user;
+    }
+
     public Post() {
     }
 

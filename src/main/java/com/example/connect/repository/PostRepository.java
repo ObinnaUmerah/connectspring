@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface PostRepository extends JpaRepository<User, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
+
+    <Optionial> Post findByIdAndUserId(Long postId, Long userId);
 }

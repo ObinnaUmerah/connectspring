@@ -36,11 +36,15 @@ public class DataLoader implements CommandLineRunner {
             userService.createUser(user2);
             userService.createUser(user3);
 
-            Post post = new Post(1L, "Hello Peeps!");
-            Post post2 = new Post(2L,"What's for dinner?");
-            Post post3 = new Post(3L, "This is war, get up and fight.");
+            Post post = new Post(1L, "Hello Peeps!", user1);
+            Post post2 = new Post(2L,"What's for dinner?", user2);
+            Post post3 = new Post(3L, "This is war, get up and fight.", user3);
 
-            post
+
+
+
+
+
         }
     }
 }

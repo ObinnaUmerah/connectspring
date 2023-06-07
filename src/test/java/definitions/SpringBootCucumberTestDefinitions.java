@@ -62,20 +62,20 @@ public class SpringBootCucumberTestDefinitions {
         }
     }
 
-//    @Given("A list of properties are available")
-//    public void aListOfPostsAreAvailable() {
-//        try {
-//            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/users/", HttpMethod.GET, null, String.class);
-//            List<Map<String, String>> properties = JsonPath
-//                    .from(String.valueOf(response
-//                            .getBody()))
-//                    .getList("$");
-//            Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-//            Assert.assertTrue(properties.size() > 0);
-//        } catch (HttpClientErrorException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Given("A list of properties are available")
+    public void aListOfPostsAreAvailable() {
+        try {
+            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/users/", HttpMethod.GET, null, String.class);
+            List<Map<String, String>> properties = JsonPath
+                    .from(String.valueOf(response
+                            .getBody()))
+                    .getList("$");
+            Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+            Assert.assertTrue(properties.size() > 0);
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    @When("I login to my account")
 //    public void iLoginToMyAccount() throws JSONException {

@@ -62,37 +62,24 @@ public class SpringBootCucumberTestDefinitions {
         }
     }
 
-    @Given("A list of properties are available")
-    public void aListOfPostsAreAvailable() {
-        try {
-            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/users/", HttpMethod.GET, null, String.class);
-            List<Map<String, String>> properties = JsonPath
-                    .from(String.valueOf(response
-                            .getBody()))
-                    .getList("$");
-            Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-            Assert.assertTrue(properties.size() > 0);
-        } catch (HttpClientErrorException e) {
-            e.printStackTrace();
-        }
+
+
+    @When("I login to my account")
+    public void iLoginToMyAccount() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("password", "jack123");
+        requestBody.put("email", "jack@aol.com");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
     }
-//
-//    @When("I login to my account")
-//    public void iLoginToMyAccount() throws JSONException {
-//        RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
-//        JSONObject requestBody = new JSONObject();
-//        requestBody.put("password", "jack123");
-//        requestBody.put("email", "jack@aol.com");
-//        request.header("Content-Type", "application/json");
-//        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
-//    }
-//
-//    @Then("JWT key is returned")
-//    public void jwtKeyIsReturned() {
-//        Assert.assertEquals(200, response.getStatusCode());
-//        Assert.assertNotNull(response.body());
-//    }
+
+    @Then("JWT key is returned")
+    public void jwtKeyIsReturned() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
 
 
 

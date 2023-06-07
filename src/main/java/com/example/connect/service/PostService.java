@@ -34,7 +34,8 @@ public class PostService{
     }
 
     public List<Post> getPosts(){
-        return postRepository.findAll();
+        User user = getCurrentLoggedInUser();
+        return postRepository.findAllByUserId(user.getId()).get();
     }
 
     public Post getPost(Long postId){
@@ -42,13 +43,8 @@ public class PostService{
     }
 
     public Optional<Post> createPost(Post postObject){
-        Optional<Post> post = postRepository.findById(PostService.getCurrentLoggedInUser().getId());
-        if(post.isPresent()) {
-            throw new InformationExistException("Post " + " already exists.");
-        } else {
-            postObject.setUser(PostService.getCurrentLoggedInUser());
-            return Optional.of(postRepository.save(postObject));
-        }
+        postObject.setUser(PostService.getCurrentLoggedInUser());
+        return Optional.of(postRepository.save(postObject));
     }
 
     public Optional<Post> updatePost(Long postId, Post postObject) {

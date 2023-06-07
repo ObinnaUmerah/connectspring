@@ -36,10 +36,20 @@ public class DataLoader implements CommandLineRunner {
             userService.createUser(user2);
             userService.createUser(user3);
 
-            Post post = new Post(1L, "Hello Peeps!", user1);
-            Post post2 = new Post(2L,"What's for dinner?", user2);
-            Post post3 = new Post(3L, "This is war, get up and fight.", user3);
+            Post post1 = new Post(1L, "Hello Peeps!");
+            Post post2 = new Post(2L,"What's for dinner?");
+            Post post3 = new Post(3L, "This is war, get up and fight.");
+            Post post4 = new Post(4L, "Where is she?");
+            post1.setUser(user1);
+            post2.setUser(user1);
+            post3.setUser(user2);
+            post4.setUser(user3);
 
+
+
+            postRepository.save(post1);
+            postRepository.save(post2);
+            postRepository.save(post3);
 
 
 

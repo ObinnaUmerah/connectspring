@@ -28,8 +28,7 @@ public class UserProfile {
     @OneToOne(mappedBy = "userProfile")
     private User user;
 
-//    @ManyToMany
-//    @Join
+//    @ManyToMan
 
     public Long getId() {
         return id;

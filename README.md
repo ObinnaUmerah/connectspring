@@ -4,9 +4,9 @@
 ### Table of Contents
 - Tools and Technology
 
-- User Stories
+- Overview
 
-- API Endpoints
+- User Stories
 
 - ERD Diagram
 
@@ -21,6 +21,14 @@
 
 ###   Tools and Technology
 Spring Boot Rest API
+
+Visual Studio Code
+
+IntelliJ
+
+Angular
+
+Bootstrap
 
 Postman
 

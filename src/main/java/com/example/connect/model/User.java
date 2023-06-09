@@ -29,30 +29,13 @@ public class User {
     @JoinColumn(name="profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "friendlist",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "friend_id")
-//    )
-//    private List<User> friends;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
 
     @OneToMany(mappedBy = "user")
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private List<Post> posts;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_posts",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "post_id")
-//    )
-//    private List<Post> posts;
 
     public Long getId() {
         return id;

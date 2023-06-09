@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/auth/")
+@RequestMapping(path = "/auth")
 public class UserController {
 
     private UserService userService;

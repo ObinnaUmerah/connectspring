@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/api/")
+@RequestMapping(path="/api")
 public class PostController {
 
     private PostService postService;

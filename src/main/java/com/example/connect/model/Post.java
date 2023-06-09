@@ -1,6 +1,9 @@
 package com.example.connect.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="posts")
@@ -15,12 +18,22 @@ public class Post {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
+
+//    @ManyToMany(mappedBy = "posts")
+//    private List<User> users;
 
     public Post(Long id, String content) {
         this.id = id;
         this.content = content;
+    }
+
+    public Post(Long id, String content, User user) {
+        this.id = id;
+        this.content = content;
+        this.user = user;
     }
 
     public Post() {

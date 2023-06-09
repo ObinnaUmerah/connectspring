@@ -31,28 +31,29 @@ public class SpringBootCucumberTestDefinitions {
 
     private static Response response;
 
-    public String getSecurityKey() throws Exception{
+    public String getSecurityKey() throws Exception {
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "jack@aol.com");
-        requestBody.put("password", "jack123");
+        requestBody.put("emailAddress", "ryan@aol.com");
+        requestBody.put("password", "ryan123");
         request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login/");
         return response.jsonPath().getString("message");
     }
 
     @Given("That a user is able to register")
-    public void thatAUserIsAbleToRegister() throws Exception{
+    public void thatAUserIsAbleToRegister() throws Exception {
         try {
 
             JSONObject requestBody = new JSONObject();
-            requestBody.put("password", "jack123");
-            requestBody.put("emailAddress", "jack@aol.com");
+            requestBody.put("password", "ryan123");
+            requestBody.put("emailAddress", "ryan@aol.com");
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
 
-            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/auth/users/register/", HttpMethod.POST, request, String.class);
+            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/auth/register/", HttpMethod.POST, request, String.class);
 
             Assert.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
         } catch (HttpClientErrorException e) {
@@ -62,10 +63,30 @@ public class SpringBootCucumberTestDefinitions {
         }
     }
 
-//    @Given("A list of properties are available")
-//    public void aListOfPostsAreAvailable() {
+
+    @When("I login to my account")
+    public void iLoginToMyAccount() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("password", "ryan123");
+        requestBody.put("emailAddress", "ryan@aol.com");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login/");
+    }
+
+    @Then("JWT key is returned")
+    public void jwtKeyIsReturned() {
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertNotNull(response.body());
+    }
+}
+
+
+//    @Given("There are users in the database")
+//    public void thereAreUsersInTheDatabase() {
 //        try {
-//            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/users/", HttpMethod.GET, null, String.class);
+//            ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/api/posts/", HttpMethod.GET, null, String.class);
 //            List<Map<String, String>> properties = JsonPath
 //                    .from(String.valueOf(response
 //                            .getBody()))
@@ -75,28 +96,40 @@ public class SpringBootCucumberTestDefinitions {
 //        } catch (HttpClientErrorException e) {
 //            e.printStackTrace();
 //        }
+//
 //    }
 //
-//    @When("I login to my account")
-//    public void iLoginToMyAccount() throws JSONException {
+//
+//    @When("I add a post to my post list")
+//    public void iAddAPostToMyPostList() throws Exception {
 //        RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
+//        String jwtKey = getSecurityKey();
+//        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
 //        JSONObject requestBody = new JSONObject();
-//        requestBody.put("password", "jack123");
-//        requestBody.put("email", "jack@aol.com");
+//        requestBody.put("content", "I will conquer the world, just watch me.");
 //        request.header("Content-Type", "application/json");
-//        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
+//        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/posts/");
 //    }
 //
-//    @Then("JWT key is returned")
-//    public void jwtKeyIsReturned() {
+//    @Then("post is added")
+//    public void thePostIsAdded() {
+//        Assert.assertEquals(201, response.getStatusCode());
+//    }
+//
+//    @When("I update a post from my post list")
+//    public void iUpdateAPostFromMyPostList() throws Exception {
+//        RestAssured.baseURI = BASE_URL;
+//        RequestSpecification request = RestAssured.given().header("Authorization", "Bearer " + getSecurityKey());
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("content", "123 ");
+//        request.header("Content-Type", "application/json");
+//        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/posts/1/");
+//
+//    }
+//
+//    @Then("the post is updated")
+//    public void thePostIsUpdated() {
 //        Assert.assertEquals(200, response.getStatusCode());
 //        Assert.assertNotNull(response.body());
 //    }
-
-
-
-
-
-
-}
+//}

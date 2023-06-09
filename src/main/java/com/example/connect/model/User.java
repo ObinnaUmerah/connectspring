@@ -1,6 +1,9 @@
 package com.example.connect.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,16 +29,13 @@ public class User {
     @JoinColumn(name="profile_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    @ManyToMany
-    @JoinTable(
-            name = "friendlist",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
-    )
-    private List<User> friends;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     private List<Post> posts;
+
 
     public Long getId() {
         return id;

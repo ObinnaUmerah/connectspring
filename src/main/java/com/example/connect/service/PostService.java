@@ -33,9 +33,16 @@ public class PostService{
         return userDetails.getUser();
     }
 
-    public List<Post> getPosts(){
-        User user = getCurrentLoggedInUser();
-        return postRepository.findAllByUserId(user.getId()).get();
+    public List<Post> getAllPosts(){
+//        User user = getCurrentLoggedInUser();
+        List<Post> postList = postRepository.findAll();
+        if(postList.isEmpty()){
+            throw new InformationNotFoundException("No post found");
+        }
+        else{
+            return postList;
+        }
+//        return postRepository.findAllByUserId(user.getId()).get();
     }
 
     public Post getPost(Long postId){

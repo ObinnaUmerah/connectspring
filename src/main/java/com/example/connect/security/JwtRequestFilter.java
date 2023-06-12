@@ -1,3 +1,6 @@
+/**
+ * This class is a filter that intercepts incoming requests and processes JWT authentication.
+ */
 package com.example.connect.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,7 @@ import java.util.logging.Logger;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    Logger logger = Logger.getLogger(JwtRequestFilter.class.getName());
+    private Logger logger = Logger.getLogger(JwtRequestFilter.class.getName());
 
     @Autowired
     private MyUserDetailsService myUserDetailsService;
@@ -27,32 +30,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtils jwtUtils;
 
-    // "Authorization" : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZW9AYW9sLmNvbSIsImlhdCI6MTY4MjQ1MjU4NywiZXhwIjoxNjgyNTM4OTg3fQ.GtsCdU8VV8MFzTLPuXsQmbs6Nnovbdax0fbU8QDH04U"
+    /**
+     * Parses the JWT token from the request header.
+     *
+     * @param request The HTTP servlet request.
+     * @return The JWT token extracted from the request header.
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
-        if (StringUtils.hasLength("headerAuth") && headerAuth.startsWith("Bearer")) {
-            // so we return JWT key
-            // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsZW9AYW9sLmNvbSIsImlhdCI6MTY4MjQ1MjU4NywiZXhwIjoxNjgyNTM4OTg3fQ.GtsCdU8VV8MFzTLPuXsQmbs6Nnovbdax0fbU8QDH04U
+        if (StringUtils.hasLength(headerAuth) && headerAuth.startsWith("Bearer")) {
             return headerAuth.substring(7);
         }
         return null;
     }
 
+    /**
+     * Filters and processes the incoming request for JWT authentication.
+     *
+     * @param request     The HTTP servlet request.
+     * @param response    The HTTP servlet response.
+     * @param filterChain The filter chain for processing the request.
+     * @throws ServletException If an error occurs during the filter processing.
+     * @throws IOException      If an I/O error occurs during the filter processing.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            // check if the jwt key is valid and not null
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                // if valid get user email from the key
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                // load user details from the key
                 UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
-                // set username and password authentication token from user user details
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
-                // build request and get security content
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

@@ -4,9 +4,9 @@
 ### Table of Contents
 - Tools and Technology
 
-- User Stories
+- Overview
 
-- API Endpoints
+- User Stories
 
 - ERD Diagram
 
@@ -14,7 +14,7 @@
 
 - Dependencies
 
-- Outside Help
+- Wins and Hurdles
 
 - Credits
 
@@ -22,7 +22,19 @@
 ###   Tools and Technology
 Spring Boot Rest API
 
+Visual Studio Code
+
+IntelliJ
+
+Angular
+
+Bootstrap
+
 Postman
+
+### Overview
+This project is one that is meant to be a website that allows people to connect thoughts with each other,
+Hence the word connect. This was made so that people can truly connect on with each other on a mental foundation.
 
 ### User Stories
 As a user I should be able to create an account.
@@ -43,6 +55,7 @@ As a user I should be able to delete a post.
 
 ### Planning
 [Github Project](https://github.com/users/ObinnaUmerah/projects/7/views/1)
+
 
 ### Dependencies
 <dependencies>
@@ -179,11 +192,18 @@ As a user I should be able to delete a post.
 </dependencies>
 
 
+### Wins and Hurdles
+I learned the basics of how to create a full stack application which was a first for me. Also the jwt portion of this
+project gave me some issues that took some time. One thing I would change would be to not include in the jwt key until
+everything else was implemented. This severely hindered my progress as I tried to make this the central point of my
+project.
+
 
 
 ### Credits
 I would like to thank [Lorena Rojas](https://github.com/lrojas4), [Maksym Zinchenko](https://github.com/maklaut007),
-[Leonardo Rodriguez](https://github.com/LRodriguez92), [Suresh Sigera](https://github.com/sureshmelvinsigera/) for their help and support on this project.
+[Leonardo Rodriguez](https://github.com/LRodriguez92), [Suresh Sigera](https://github.com/sureshmelvinsigera/) for 
+helping me with the work that I was able to complete on this iteration.
 
 
 

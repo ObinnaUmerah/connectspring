@@ -28,9 +28,10 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadUserData() {
+        System.out.println("Loading data...");
         if (userRepository.count() == 0) {
             User user1 = new User(1L, "jack@aol.com", "jack123");
-            User user2 = new User(2L, "ron@aol.comm", "ron123");
+            User user2 = new User(2L, "ron@aol.com", "ron123");
             User user3 = new User(3L, "luke@aol.com", "luke123");
             userService.createUser(user1);
             userService.createUser(user2);
@@ -50,7 +51,7 @@ public class DataLoader implements CommandLineRunner {
             postRepository.save(post1);
             postRepository.save(post2);
             postRepository.save(post3);
-
+            System.out.println("Data completely loaded.");
 
 
 

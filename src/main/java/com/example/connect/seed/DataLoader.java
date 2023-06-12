@@ -51,6 +51,7 @@ public class DataLoader implements CommandLineRunner {
             postRepository.save(post1);
             postRepository.save(post2);
             postRepository.save(post3);
+            postRepository.save(post4);
             System.out.println("Data completely loaded.");
 
 

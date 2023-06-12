@@ -25,8 +25,8 @@ public class PostController {
 
 
     @GetMapping(path = "/posts/")
-    public List<Post> getPosts(){
-        return postService.getPosts();
+    public List<Post> getAllPosts(){
+        return postService.getAllPosts();
     }
 
     @GetMapping(path = "/posts/{postId}/")

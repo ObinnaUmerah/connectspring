@@ -14,6 +14,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column
     private String content;
 
@@ -21,9 +22,6 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User user;
-
-//    @ManyToMany(mappedBy = "posts")
-//    private List<User> users;
 
     public Post(Long id, String content) {
         this.id = id;
@@ -62,4 +60,6 @@ public class Post {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,9 @@ public class PostService{
     public void setPostRepository(PostRepository postRepository){
         this.postRepository = postRepository;
     }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository){this.userRepository = userRepository;}
 
     public static User getCurrentLoggedInUser(){
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -42,7 +46,6 @@ public class PostService{
         else{
             return postList;
         }
-//        return postRepository.findAllByUserId(user.getId()).get();
     }
 
     public Post getPost(Long postId){
@@ -53,6 +56,7 @@ public class PostService{
         postObject.setUser(PostService.getCurrentLoggedInUser());
         return Optional.of(postRepository.save(postObject));
     }
+
 
     public Optional<Post> updatePost(Long postId, Post postObject) {
         Optional<Post> post = Optional.ofNullable(postRepository.findByIdAndUserId(postId, PostService.getCurrentLoggedInUser().getId()));
@@ -75,14 +79,11 @@ public class PostService{
         }
     }
 
+    @PostMapping(path ="/posts/")
+    public Post createPost(@RequestBody Post postObject, @PathVariable Long userid) {
+       Optional<User> user = userRepository.findById(userid);
 
-
-
-//    @PostMapping(path ="/posts/")
-//    public Post createPost(@RequestBody Post postObject, @PathVariable Long userid) {
-//       Optional<User> user = userRepository.findById(userid);
-//
-//       Post post = new Post();
-//       return post;
-//    }
+       Post post = new Post();
+       return post;
+    }
 }

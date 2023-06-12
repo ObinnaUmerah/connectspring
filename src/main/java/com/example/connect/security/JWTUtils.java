@@ -1,3 +1,6 @@
+/**
+ * This class provides utility methods for working with JSON Web Tokens (JWTs).
+ */
 package com.example.connect.security;
 
 import io.jsonwebtoken.*;
@@ -10,7 +13,7 @@ import java.util.logging.Logger;
 
 @Service
 public class JWTUtils {
-    Logger logger = Logger.getLogger(JWTUtils.class.getName());
+    private Logger logger = Logger.getLogger(JWTUtils.class.getName());
 
     @Value("${jwt-secret}")
     private String jwtSecret;
@@ -18,19 +21,42 @@ public class JWTUtils {
     @Value("${jwt-expiration-ms}")
     private int jwtExpirationMs;
 
+    /**
+     * Generates a JWT token for the specified user details.
+     *
+     * @param myUserDetails The user details used to generate the token.
+     * @return The generated JWT token.
+     */
     public String generateJwtToken(MyUserDetails myUserDetails) {
         return Jwts.builder()
-                .setSubject((myUserDetails.getUsername()))
+                .setSubject(myUserDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 
+    /**
+     * Retrieves the username from the JWT token.
+     *
+     * @param token The JWT token.
+     * @return The username extracted from the token.
+     */
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(jwtSecret).build().parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder()
+                .setSigningKey(jwtSecret)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
+    /**
+     * Validates the JWT token.
+     *
+     * @param authToken The JWT token to validate.
+     * @return True if the token is valid, false otherwise.
+     */
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -48,5 +74,4 @@ public class JWTUtils {
         }
         return false;
     }
-
 }
